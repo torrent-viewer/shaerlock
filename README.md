@@ -1,4 +1,4 @@
-# Shærlock
+# Shærlock [![Build Status](https://travis-ci.org/torrent-viewer/shaerlock.svg?branch=master)](https://travis-ci.org/torrent-viewer/shaerlock)
 
 ## Media file tracker
 
