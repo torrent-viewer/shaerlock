@@ -1,8 +1,8 @@
 /*
 
-Shaerlock is a media file indexer.
+Shærlock is a media file indexer.
 
-Shaerlock is a library walking through directory trees and indexing all of the
+Shærlock is a library walking through directory trees and indexing all of the
 media files for which it knows the format. The entry point of the library is a
 function called `Investigate`. It takes a path as its only parameter, and will
 recurse through it while indexing all of the media files it finds on its way.
