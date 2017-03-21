@@ -13,6 +13,6 @@ Additionally a shaerlock binary is provided under the package
 "github.com/torrent-viewer/shaerlock/cmd/shaerlock". This program takes a list
 of folders as arguments and Investigates each of these folders, printing the
 found Media structures (and all of their fields) to the standard output.
-*/
 
+*/
 package shaerlock // import "github.com/torrent-viewer/shaerlock"
