@@ -29,6 +29,10 @@ var sleuthsMutex sync.Mutex
 // for a format when a sleuth is already registered.
 var DuplicateSleuthErr = errors.New("Error registering sleuth: extension is already handled")
 
+// NoSleuthFoundErr is the error returned when trying to examine a file whose
+// extension is not found in the sleuths registry.
+var NoSleuthFoundErr = errors.New("No sleuth is registered for this file extension")
+
 func init() {
 	sleuths = make(map[string]Sleuth)
 	RegisterSleuth("mkv", SleuthMatroska)
@@ -56,7 +60,7 @@ func ExamineFile(path string) (Media, error) {
 	}
 	sleuth, ok := sleuths[ext]
 	if !ok {
-		return Media{}, nil
+		return Media{}, NoSleuthFoundErr
 	}
 	return sleuth(path)
 }
@@ -74,10 +78,9 @@ func Investigate(root string) ([]Media, error) {
 			return nil
 		}
 		media, err := ExamineFile(path)
-		if err != nil {
-			return err
+		if err == nil {
+			medias = append(medias, media)
 		}
-		medias = append(medias, media)
 		return nil
 	})
 	return medias, err
