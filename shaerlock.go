@@ -4,8 +4,8 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"sync"
 	"strings"
+	"sync"
 )
 
 // Media stores all the information we want to associate to a media file (e.g
@@ -23,7 +23,7 @@ type Sleuth func(path string) (Media, error)
 
 var sleuths map[string]Sleuth
 
-var sleuthsMutex sync.Mutex
+var sleuthsMutex sync.RWMutex
 
 // DuplicationSleuthErr is the error returned when attempting to register a sleuth
 // for a format when a sleuth is already registered.
@@ -54,6 +54,8 @@ func RegisterSleuth(ext string, decoder Sleuth) error {
 // ExamineFile transforms a path into a Media structure, using the most
 // appropriate registered Sleuth.
 func ExamineFile(path string) (Media, error) {
+	sleuthsMutex.RLock()
+	defer sleuthsMutex.RUnlock()
 	ext := strings.TrimPrefix(filepath.Ext(path), ".")
 	if len(ext) == 0 {
 		return Media{}, nil
